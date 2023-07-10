@@ -7,7 +7,6 @@
 #include "globalConfig.hpp"
 #include "Calculator.hpp"
 #include "utils/json.hpp"
-#include "../toolEquipped.hpp"
 #include "exception.hpp"
 #include "loadToolEquipped.hpp"
 

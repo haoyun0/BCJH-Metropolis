@@ -9,6 +9,7 @@ const double bestToolProb = 0.9;
 const char* guestName[14] = {"蓝采和", "吕洞宾", "韩湘子", "玉贵人", "苏妲己", 
                             "何仙姑", "铁拐李", "何仙姑2", "胡喜媚", "韩湘子2", 
                             "蓝采和2", "胡喜媚2", "曹国舅", "钟离权"};
+std::string getGradeName(Chef &a, Recipe &b);
 
 ToolEnum toolHeuristic(States &s, int chefId) {
     auto chef = s.chef[chefId];
@@ -292,9 +293,12 @@ int e0::sumPrice(States s, CList *chefList, RList *recipeList, int log,
                     scoreCache = 0;
                     fullCache = 0;
                     std::cout << "\t菜谱：" 
-                            << s.recipe[d + i - 2]->name << "(" << scoreCacheList[i - 2] << ")" << "；"
-                            << s.recipe[d + i - 1]->name << "(" << scoreCacheList[i - 1] << ")" << "；" 
-                            << s.recipe[d + i]->name << "(" << scoreCacheList[i] << ")" << "；" 
+                            << s.recipe[d + i - 2]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 2]) 
+                                << scoreCacheList[i - 2] << ")" << "；"
+                            << s.recipe[d + i - 1]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 1])
+                                << scoreCacheList[i - 1] << ")" << "；" 
+                            << s.recipe[d + i]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i])
+                                << scoreCacheList[i] << ")" << "；" 
                             << std::endl;
                     if (i == 8){
                         std::cout << "GuestScore: " << ansCache << std::endl;
@@ -363,10 +367,10 @@ double f::linear(int stepMax, int step, double tMax, double tMin) {
     return (tMax - tMin) * (1 - step / (double)stepMax) + tMin;
 }
 double f::t_dist_fast(int stepMax, int step, double tMax, double tMin) {
-    return tMin + (tMax - tMin) / (1 + step * step / 300000.0);
+    return tMin + (tMax - tMin) / (1 + 1ll * step * step / 300000.0);
 }
 double f::t_dist_slow(int stepMax, int step, double tMax, double tMin) {
-    return tMin + (tMax - tMin) / (1 + step * step / 3000000.0);
+    return tMin + (tMax - tMin) / (1 + 1ll * step * step / 3000000.0);
 }
 double f::linear_mul(int stepMax, int step, double tMax, double tMin) {
     return tMin + (tMax - tMin) / (1 + step / 100000.0);
@@ -437,4 +441,25 @@ States perfectChef(States &s, CList *c) {
         s.chef[i]->modifyTool(s.toolCKPT[i]);
     }
     return s;
+}
+
+std::string getGradeName(Chef &a, Recipe &b)
+{
+    int grade = a.skill.ability / b.cookAbility;
+    switch (grade)
+    {
+    case 5:
+        return "传，";
+    case 4:
+        return "神，";
+    case 3:
+        return "特，";
+    case 2:
+        return "优，";
+    case 1:
+        return "可，";    
+    default:
+        return "不可做，重跑，";
+        break;
+    }
 }

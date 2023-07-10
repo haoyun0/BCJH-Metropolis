@@ -14,7 +14,7 @@ BanquetInfo getPrice(Chef *chef, Recipe *recipe, BanquetRule r, bool verbose) {
         if (verbose)
             std::cout << "Grade 0" << std::endl;
         {
-            BanquetInfo b = {0, 50}; //不能做的不要出现在结果中
+            BanquetInfo b = {0, 999}; //不能做的不要出现在结果中
             return b;
         }
     }
