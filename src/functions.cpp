@@ -6,9 +6,10 @@
 #include <cassert>
 
 const double bestToolProb = 0.9;
-const char* guestName[14] = {"蓝采和", "吕洞宾", "韩湘子", "玉贵人", "苏妲己", 
+const char* guestName[16] = {"蓝采和", "吕洞宾", "韩湘子", "玉贵人", "苏妲己", 
                             "何仙姑", "铁拐李", "何仙姑2", "胡喜媚", "韩湘子2", 
-                            "蓝采和2", "胡喜媚2", "曹国舅", "钟离权"};
+                            "蓝采和2", "胡喜媚2", "曹国舅", "钟离权", "打更人", 
+                            "玉贵人2"};
 std::string getGradeName(Chef &a, Recipe &b);
 
 ToolEnum toolHeuristic(States &s, int chefId) {
@@ -293,12 +294,15 @@ int e0::sumPrice(States s, CList *chefList, RList *recipeList, int log,
                     scoreCache = 0;
                     fullCache = 0;
                     std::cout << "\t菜谱：" 
-                            << s.recipe[d + i - 2]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 2]) 
-                                << scoreCacheList[i - 2] << ")" << "；"
-                            << s.recipe[d + i - 1]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 1])
-                                << scoreCacheList[i - 1] << ")" << "；" 
-                            << s.recipe[d + i]->name << "(" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i])
-                                << scoreCacheList[i] << ")" << "；" 
+                                << "[" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 2]) << "]"
+                            << s.recipe[d + i - 2]->name 
+                                << "(" << scoreCacheList[i - 2] << ")" << "；"
+                                << "[" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 1]) << "]"
+                            << s.recipe[d + i - 1]->name 
+                                << "(" << scoreCacheList[i - 1] << ")" << "；"
+                                << "[" << getGradeName(*s.chef[d2 + i/3], *s.recipe[d + i - 0]) << "]"
+                            << s.recipe[d + i - 0]->name 
+                                << "(" << scoreCacheList[i - 0] << ")" << "；"
                             << std::endl;
                     if (i == 8){
                         std::cout << "GuestScore: " << ansCache << std::endl;
@@ -449,17 +453,17 @@ std::string getGradeName(Chef &a, Recipe &b)
     switch (grade)
     {
     case 5:
-        return "传，";
+        return "传";
     case 4:
-        return "神，";
+        return "神";
     case 3:
-        return "特，";
+        return "特";
     case 2:
-        return "优，";
+        return "优";
     case 1:
-        return "可，";    
+        return "可";    
     default:
-        return "不可做，重跑，";
+        return "BUG请重跑";
         break;
     }
 }
