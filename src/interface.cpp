@@ -103,6 +103,7 @@ void Lincece() {
 }
 
 void examine_iter() {
+    if (MP) return;
     if (ITER_CHEF < 5000 || ITER_RECIPE < 10000) {
         cout << "检测到迭代次数过少!!!" << endl;
         cout << "请阅读目录下的说明文档更改迭代数!!!" << endl;

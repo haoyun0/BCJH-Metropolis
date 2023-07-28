@@ -35,6 +35,8 @@ int banquetRule13(BanquetStrictRule **, BanquetLenientRule **, States &, int);
 int banquetRule14(BanquetStrictRule **, BanquetLenientRule **, States &, int);
 //风云宴 玉贵人2
 int banquetRule15(BanquetStrictRule **, BanquetLenientRule **, States &, int);
+//风云宴 张果老
+int banquetRule16(BanquetStrictRule **, BanquetLenientRule **, States &, int);
 
 /**
  * @brief
@@ -54,60 +56,73 @@ void banquetRule(BanquetRule *const &rule, States &s, int *bestfull) {
         lenientRule[i] = &rule[i].lenientRule;
     }
 
+    int (*ruleFunc)(BanquetStrictRule **, BanquetLenientRule **, States &, int);
+    int (*ruleArray[])(BanquetStrictRule **, BanquetLenientRule **, States &, int) = {
+        banquetRule0, banquetRule1, banquetRule2, banquetRule3, banquetRule4,
+        banquetRule5, banquetRule6, banquetRule7, banquetRule8, banquetRule9,
+        banquetRule10, banquetRule11, banquetRule12, banquetRule13, banquetRule14,
+        banquetRule15, banquetRule16
+    };
+
     for (int i = 0; i < NUM_GUESTS; i++) {
-        switch (guestList[i])
-        {
-        case 0:
-            bestfull[i] = banquetRule0(strictRule, lenientRule, s, i);
-            break;
-        case 1:
-            bestfull[i] = banquetRule1(strictRule, lenientRule, s, i);
-            break;        
-        case 2:
-            bestfull[i] = banquetRule2(strictRule, lenientRule, s, i);
-            break;        
-        case 3:
-            bestfull[i] = banquetRule3(strictRule, lenientRule, s, i);
-            break;        
-        case 4:
-            bestfull[i] = banquetRule4(strictRule, lenientRule, s, i);
-            break;       
-        case 5:
-            bestfull[i] = banquetRule5(strictRule, lenientRule, s, i);
-            break;       
-        case 6:
-            bestfull[i] = banquetRule6(strictRule, lenientRule, s, i);
-            break;       
-        case 7:
-            bestfull[i] = banquetRule7(strictRule, lenientRule, s, i);
-            break;       
-        case 8:
-            bestfull[i] = banquetRule8(strictRule, lenientRule, s, i);
-            break;       
-        case 9:
-            bestfull[i] = banquetRule9(strictRule, lenientRule, s, i);
-            break;       
-        case 10:
-            bestfull[i] = banquetRule10(strictRule, lenientRule, s, i);
-            break;      
-        case 11:
-            bestfull[i] = banquetRule11(strictRule, lenientRule, s, i);
-            break;      
-        case 12:
-            bestfull[i] = banquetRule12(strictRule, lenientRule, s, i);
-            break;         
-        case 13:
-            bestfull[i] = banquetRule13(strictRule, lenientRule, s, i);
-            break;            
-        case 14:
-            bestfull[i] = banquetRule14(strictRule, lenientRule, s, i);
-            break;            
-        case 15:
-            bestfull[i] = banquetRule15(strictRule, lenientRule, s, i);
-            break;    
-        default:
-            break;
-        }
+        ruleFunc = ruleArray[guestList[i]];
+        bestfull[i] = ruleFunc(strictRule, lenientRule, s, i);
+        // switch (guestList[i])
+        // {
+        // case 0:
+        //     bestfull[i] = banquetRule0(strictRule, lenientRule, s, i);
+        //     break;
+        // case 1:
+        //     bestfull[i] = banquetRule1(strictRule, lenientRule, s, i);
+        //     break;        
+        // case 2:
+        //     bestfull[i] = banquetRule2(strictRule, lenientRule, s, i);
+        //     break;        
+        // case 3:
+        //     bestfull[i] = banquetRule3(strictRule, lenientRule, s, i);
+        //     break;        
+        // case 4:
+        //     bestfull[i] = banquetRule4(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 5:
+        //     bestfull[i] = banquetRule5(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 6:
+        //     bestfull[i] = banquetRule6(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 7:
+        //     bestfull[i] = banquetRule7(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 8:
+        //     bestfull[i] = banquetRule8(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 9:
+        //     bestfull[i] = banquetRule9(strictRule, lenientRule, s, i);
+        //     break;       
+        // case 10:
+        //     bestfull[i] = banquetRule10(strictRule, lenientRule, s, i);
+        //     break;      
+        // case 11:
+        //     bestfull[i] = banquetRule11(strictRule, lenientRule, s, i);
+        //     break;      
+        // case 12:
+        //     bestfull[i] = banquetRule12(strictRule, lenientRule, s, i);
+        //     break;         
+        // case 13:
+        //     bestfull[i] = banquetRule13(strictRule, lenientRule, s, i);
+        //     break;            
+        // case 14:
+        //     bestfull[i] = banquetRule14(strictRule, lenientRule, s, i);
+        //     break;            
+        // case 15:
+        //     bestfull[i] = banquetRule15(strictRule, lenientRule, s, i);
+        //     break;    
+        // case 16:
+        //     bestfull[i] = banquetRule16(strictRule, lenientRule, s, i);
+        //     break;    
+        // default:
+        //     break;
+        // }
     }
     return;
 }
@@ -1623,10 +1638,10 @@ int banquetRule14(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRu
 		}
 	}
 	//条件：神
-	//效果：本道料理基础售价+300
+	//效果：本道料理基础售价+200
 	for (int i = d + 6; i < d + 9; i++) {
 		if (s.chef[i / 3]->skill.ability / s.recipe[i]->cookAbility >= 4) {
-			lenientRule[i]->baseRule.directAdd += 300;
+			lenientRule[i]->baseRule.directAdd += 200;
 			break;
 		}
 	}
@@ -1760,5 +1775,105 @@ int banquetRule15(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRu
 		}
 	}
 	return 13;
+}
+
+//本程序由generateRule.py生成
+//风云宴 张果老
+int banquetRule16(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRule, States &s, int rank) {
+    int d = rank * DISH_PER_CHEF * CHEFS_PER_GUEST;
+
+	//第1轮
+	//条件：烤
+	//效果：本道料理售价+100%
+	for (int i = d + 0; i < d + 3; i++) {
+		if (s.recipe[i]->cookAbility.bake) {
+			lenientRule[i]->addRule.buff += 100;
+			break;
+		}
+	}
+	//条件：蒸
+	//效果：本道料理饱腹感+2
+	for (int i = d + 0; i < d + 3; i++) {
+		if (s.recipe[i]->cookAbility.steam) {
+			lenientRule[i]->addRule.full += 2;
+			break;
+		}
+	}
+	//条件：炒
+	//效果：本道料理基础售价+200
+	for (int i = d + 0; i < d + 3; i++) {
+		if (s.recipe[i]->cookAbility.stirfry) {
+			lenientRule[i]->baseRule.directAdd += 200;
+			break;
+		}
+	}
+	//条件：切
+	//效果：本道料理售价+100%
+	for (int i = d + 0; i < d + 3; i++) {
+		if (s.recipe[i]->cookAbility.knife) {
+			lenientRule[i]->addRule.buff += 100;
+			break;
+		}
+	}
+
+	//第2轮
+	//条件：第二道菜
+	//效果：第二道菜基础售价+50%
+	lenientRule[d + 4]->baseRule.buff += 50;
+	//条件：1火
+	//效果：下道料理意图生效次数加一
+	for (int i = d + 3; i < d + 5; i++) {
+		if (s.recipe[i]->rarity == 1) {
+			lenientRule[i + 1]->oneMore();
+			break;
+		}
+	}
+	//条件：切
+	//效果：本道料理售价+100%
+	for (int i = d + 3; i < d + 6; i++) {
+		if (s.recipe[i]->cookAbility.knife) {
+			lenientRule[i]->addRule.buff += 100;
+			break;
+		}
+	}
+	//条件：炸
+	//效果：本道料理意图生效次数加一
+	for (int i = d + 3; i < d + 6; i++) {
+		if (s.recipe[i]->cookAbility.fry) {
+			lenientRule[i]->oneMore();
+			break;
+		}
+	}
+
+	//第3轮
+	//条件：苦
+	//效果：本道料理饱腹感为8
+	for (int i = d + 6; i < d + 9; i++) {
+		if (s.recipe[i]->flavor.bitter) {
+			lenientRule[i]->addRule.fullAdd = false;
+			strictRule[i]->addRule.full = 8;
+			break;
+		}
+	}
+	//条件：1火
+	//效果：本道料理售价+100%
+	for (int i = d + 6; i < d + 9; i++) {
+		if (s.recipe[i]->rarity == 1) {
+			lenientRule[i]->addRule.buff += 100;
+			break;
+		}
+	}
+	//条件：第一道菜
+	//效果：第一道菜基础售价+200
+	lenientRule[d + 6]->baseRule.directAdd += 200;
+	//条件：传
+	//效果：本道料理基础售价+200
+	for (int i = d + 6; i < d + 9; i++) {
+		if (s.chef[i / 3]->skill.ability / s.recipe[i]->cookAbility >= 5) {
+			lenientRule[i]->baseRule.directAdd += 200;
+			break;
+		}
+	}
+	return 37;
 }
 #endif

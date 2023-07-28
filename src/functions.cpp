@@ -6,10 +6,10 @@
 #include <cassert>
 
 const double bestToolProb = 0.9;
-const char* guestName[16] = {"蓝采和", "吕洞宾", "韩湘子", "玉贵人", "苏妲己", 
+const char* guestName[17] = {"蓝采和", "吕洞宾", "韩湘子", "玉贵人", "苏妲己", 
                             "何仙姑", "铁拐李", "何仙姑2", "胡喜媚", "韩湘子2", 
                             "蓝采和2", "胡喜媚2", "曹国舅", "钟离权", "打更人", 
-                            "玉贵人2"};
+                            "玉贵人2", "张果老"};
 std::string getGradeName(Chef &a, Recipe &b);
 
 ToolEnum toolHeuristic(States &s, int chefId) {
