@@ -1195,7 +1195,7 @@ int banquetRule10(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRu
 
 //本程序由generateRule.py生成
 //风云宴 胡喜媚2
-int banquetRule(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRule, States &s, int rank) {
+int banquetRule11(BanquetStrictRule **strictRule, BanquetLenientRule **lenientRule, States &s, int rank) {
     int d = rank * DISH_PER_CHEF * CHEFS_PER_GUEST;
 
 	//第1轮
