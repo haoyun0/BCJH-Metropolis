@@ -53,15 +53,14 @@ void MainActivity() {
 void interact(){
     if (BCJH){
         char op[100];
-        cout << "是否要从云端下载白菜菊花数据(仅第一次运行需要)? yes or no? 输入y或者n" << endl;
-        cin >> op;
-        if (op[0] != 'y' && op[0] != 'Y') {
+        cout << "白菜菊花云端数据id(使用本地数据请直接回车): ";
+        char id[10]={0};
+        cin.getline(id, 9);
+        if (id[0] < '0' || id[0] > '9') {
             cout << "你选择使用本地数据" << endl;
             return;
         }
-        cout << "请输入你的白菜菊花云端id:" << endl;
-        char id[10]={0};
-        cin >> id;
+
         char command[64] = "cd ../data&&bcjhDownload.exe ";
         concat(command, id);
         
@@ -98,7 +97,7 @@ void Lincece() {
     cout << "\t桌面版作者:威严扫地机" << endl;
     cout << "\t原项目核心算法作者:ajdx" << endl;
     cout << "\t特别致谢:萤火" << endl;
-    cout << "桌面版交流群：370017786，二群：241168853" << endl;
+    cout << "桌面版交流群：二群：241168853" << endl;
     cout << endl;
 }
 

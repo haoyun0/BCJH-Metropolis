@@ -202,8 +202,17 @@ void Skill::loadJson(Json::Value &v) {
     for (auto skill : v) {
         int id = skill["skillId"].asInt();
         skillList[id] = Skill();
-        for (auto effect : skill["effect"]) {
+        for (Json::Value effect : skill["effect"]) {
             auto skill = &skillList[id];
+            if (effect.isMember("conditionType")) {
+                skill->conditionalSkill.enable = true;
+                skill->conditionalSkill.type = effect["type"].asString();
+                skill->conditionalSkill.value = effect["value"].asInt();
+                skill->conditionalSkill.condition = effect["condition"].asString();
+                skill->conditionalSkill.conditionType = effect["conditionType"].asString();
+                if (effect.isMember("conditionValue"))
+                    skill->conditionalSkill.conditionValue = effect["conditionValue"].asInt();
+            } else
             if (effect["condition"].asString() == "Self") {
                 std::string type = effect["type"].asString();
                 int value = effect["value"].asInt();
@@ -277,6 +286,8 @@ void Skill::loadJson(Json::Value &v) {
                     skill->materialBuff.fish = value;
                 } else if (type == "UseCreation") {
                     skill->materialBuff.creation = value;
+                } else if (type == "BasicPrice") {
+                    skill->abilityBuff.basic = value;
                 } else if (type == "CookbookPrice") {
                     std::string conditionType =
                         effect["conditionType"].asString();
@@ -284,27 +295,22 @@ void Skill::loadJson(Json::Value &v) {
                         for (auto num : effect["conditionValueList"]) {
                             skill->rarityBuff[num.asInt()] = value;
                         }
-                    }
+                    } else
                     if (conditionType == "ExcessCookbookNum") {
                         int num = effect["conditionValue"].asInt();
                         skill->strangeBuff.ExcessCookbookNum.dishNum = num;
                         skill->strangeBuff.ExcessCookbookNum.dishBuff = value;
-                    }
+                    } else
+                    if (conditionType == "FewerCookbookNum") {
+                        int num = effect["conditionValue"].asInt();
+                        skill->strangeBuff.ExcessCookbookNum.dishNum = num;
+                        skill->strangeBuff.ExcessCookbookNum.dishBuff = value;
+
+                    } else
                     if (conditionType == "Rank") {
                         int num = effect["conditionValue"].asInt();
                         skill->strangeBuff.Rank.dishNum = num;
                         skill->strangeBuff.Rank.dishBuff = value;
-                    }
-                } else if (type == "BasicPrice") {
-                    std::string conditionType =
-                        effect["conditionType"].asString();
-                    if (conditionType == "PerRank") {
-                        skill->conditionalSkill.enable = true;
-                        skill->conditionalSkill.type = type;
-                        skill->conditionalSkill.value = value;
-                        skill->conditionalSkill.condition = effect["condition"].asString();
-                        skill->conditionalSkill.conditionType = conditionType;
-                        skill->conditionalSkill.conditionValue = effect["conditionValue"].asInt();
                     }
                 }
             } else
@@ -332,11 +338,9 @@ void Skill::loadJson(Json::Value &v) {
                     skill->halo.enable_skill = true;
                     skill->halo.skill.knife = value;
                 } else if (type == "UseFry") { 
-                    skill->conditionalSkill.enable = true;
-                    skill->conditionalSkill.type = type;
-                    skill->conditionalSkill.value = value;
-                    skill->conditionalSkill.condition = effect["condition"].asString();
-                    skill->conditionalSkill.conditionType = effect["conditionType"].asString();
+                    //conditional 
+                } else if (type == "UseKnife") { 
+                    //conditional 
                 }
             } else
             if (effect["condition"].asString() == "Next") {

@@ -218,15 +218,23 @@ void condition_handle(States &s) {
         if (s.chef[i]->skill.conditionalSkill.enable) {
             //暂时只考虑已有厨师
             ConditionalSkill *c = &s.chef[i]->skill.conditionalSkill;
-            //汤圆
-            if (c->type == "BasicPrice") {
+            if (c->conditionType == "PerRank") {
+                //每制作一种x级料理
                 int tot = 0;
                 for (int j = i * DISH_PER_CHEF; j < (i + 1) * DISH_PER_CHEF; j++)
                     if (s.chef[i]->skill.ability / s.recipe[j]->cookAbility >= c->conditionValue)
                         tot += c->value;
-                s.chef[i]->skill.abilityBuff.basic += tot;
+                if (c->type == "BasicPrice") {
+                    s.chef[i]->skill.abilityBuff.basic += tot;
+                } else
+                if (c->type == "UseKnife")
+                {
+                    s.chef[i]->skill.halo.enable_buff = true;
+                    s.chef[i]->skill.halo.buff.knife += tot;
+                }
+                
             } else
-            if (c->type == "UseFry") {
+            if (c->conditionType == "SameSkill") {
                 int j = i * DISH_PER_CHEF;
                 int cnt = 0;
                 if (s.recipe[j]->cookAbility.bake > 0 &&
@@ -254,8 +262,14 @@ void condition_handle(States &s) {
                     s.recipe[j + 2]->cookAbility.fry > 0)
                     cnt ++;
                 if (cnt > 0) {
-                    s.chef[i]->skill.halo.enable_buff = true;
-                    s.chef[i]->skill.halo.buff.fry = cnt * c->value;
+                    if (c->type == "UseFry") {
+                        s.chef[i]->skill.halo.enable_buff = true;
+                        s.chef[i]->skill.halo.buff.fry = cnt * c->value;
+                    }else
+                    if (c->type == "BasicPrice"){
+                        s.chef[i]->skill.halo.enable_buff = true;
+                        s.chef[i]->skill.halo.buff.basic = cnt * c->value;
+                    }
                 }
             }
         }

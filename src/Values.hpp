@@ -180,10 +180,12 @@ class CookAbility : public Ability {
 class StrangeBuff {
   public:
     DishBuff ExcessCookbookNum;
+    DishBuff FewerCookbookNum;
     DishBuff Rank;
 
     StrangeBuff() {
         this->ExcessCookbookNum.dishNum = -1;
+        this->FewerCookbookNum.dishNum = -1;
         this->Rank.dishNum = -1;
     }
     void add(const StrangeBuff &s) {
@@ -194,6 +196,15 @@ class StrangeBuff {
             } else {
                 this->ExcessCookbookNum.dishNum = s.ExcessCookbookNum.dishNum;
                 this->ExcessCookbookNum.dishBuff = s.ExcessCookbookNum.dishBuff;
+            }
+        } 
+        if (~s.FewerCookbookNum.dishNum) {
+            if (~this->FewerCookbookNum.dishNum) {
+                //不许不else,很难想象不else会发生什么
+                this->FewerCookbookNum.dishBuff += s.FewerCookbookNum.dishBuff;
+            } else {
+                this->FewerCookbookNum.dishNum = s.FewerCookbookNum.dishNum;
+                this->FewerCookbookNum.dishBuff = s.FewerCookbookNum.dishBuff;
             }
         }
         if (~s.Rank.dishNum) {
@@ -210,6 +221,9 @@ class StrangeBuff {
         if (~this->ExcessCookbookNum.dishNum)
             std::cout << "ExcessCookbookNum: " << this->ExcessCookbookNum.dishNum 
                     << "(" << this->ExcessCookbookNum.dishBuff << ")" << std::endl;
+        if (~this->FewerCookbookNum.dishNum)
+            std::cout << "FewerCookbookNum: " << this->FewerCookbookNum.dishNum 
+                    << "(" << this->FewerCookbookNum.dishBuff << ")" << std::endl;
         if (~this->Rank.dishNum)
             std::cout << "Rank: " << this->Rank.dishNum 
                     << "(" << this->Rank.dishBuff << ")" << std::endl;
