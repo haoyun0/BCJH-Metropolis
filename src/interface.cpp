@@ -13,6 +13,7 @@ using std::endl;
 using std::cin;
 
 CSimpleIniA ini;// 加载ini文件
+CSimpleIniA ini_guest;// 加载规则ini文件
 
 bool GUIDE;
 bool BCJH;
@@ -156,6 +157,8 @@ void readINI(){
     SI_Error rc;
     rc = ini.LoadFile("../data/config.ini");	// 另一种方式：SI_Error LoadFile(FILE * a_fpFile);
     if (rc < 0)  cout << "加载 config.ini 文件失败！" << endl;
+    rc = ini_guest.LoadFile("../data/config_guest.ini");	
+    if (rc < 0)  cout << "加载 config_guest.ini 文件失败！" << endl;
 
     ini.SetUnicode(false);
     ini.SetMultiKey(false);
@@ -166,8 +169,8 @@ void readINI(){
     MP = stobool(ini.GetValue("tools", "MP", "false"));
 
     //[guestConfig]
-    NUM_GUESTS = stoi(ini.GetValue("guestConfig", "NUM_GUESTS", "1"));
-    stoarray(ini.GetValue("guestConfig", "guestList", "1"), guestList);
+    NUM_GUESTS = stoi(ini_guest.GetValue("guestConfig", "NUM_GUESTS", "1"));
+    stoarray(ini_guest.GetValue("guestConfig", "guestList", "1"), guestList);
 
     //[calculator]
     ITER_CHEF = stoi(ini.GetValue("calculator", "ITER_CHEF", "10000"));
