@@ -2,7 +2,7 @@ name: Update Game Data, Recompile wasm, and push to forward
 
 on:
     schedule:
-        - cron: '0 0 * * *'
+        - cron: '15 34 * * *'
 
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
               with:
                   # GitHub Action output files
                   source-directory: build_js/
-                  destination-github-username: hjenryin
+                  destination-github-username: haoyun0
                   destination-repository-name: BCJH-Metropolis-html
                   user-email: 41898282+github-actions[bot]@users.noreply.github.com
                   # It defaults to `main`
@@ -106,7 +106,7 @@ jobs:
               with:
                   # GitHub Action output files
                   source-directory: build_js/
-                  destination-github-username: hjenryin
+                  destination-github-username: haoyun0
                   destination-repository-name: BCJH-Metropolis-html
                   user-email: 41898282+github-actions[bot]@users.noreply.github.com
                   # It defaults to `main`
