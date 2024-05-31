@@ -78,6 +78,7 @@ jobs:
     push-to-debug:
         runs-on: ubuntu-latest
         # Makes sure that when the debug page is ready, the main page is also ready
+        # It's no need to make sure that
         if: ${{ !cancelled() }}
         steps:
             - uses: mymindstorm/setup-emsdk@v13
