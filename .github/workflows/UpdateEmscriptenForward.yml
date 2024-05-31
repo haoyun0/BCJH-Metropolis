@@ -2,7 +2,7 @@ name: Update Game Data, Recompile wasm, and push to forward
 
 on:
     schedule:
-        - cron: '7 40 * * *'
+        - cron: '0 8 * * *'
 
 
 jobs:
