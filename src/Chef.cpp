@@ -272,10 +272,11 @@ void Skill::loadJson(const Json::Value &v) {
                 }
                 std::string type = effect["type"].asString();
                 int value = effect["value"].asInt();
+                bool isSkillOn = true;
                 if (type == "Gold_Gain") {
                     skill.pricePercentBuff = value;
                 } else if (type == "MutiEquipmentSkill") {
-                    // 为啥图鉴网接口时muti而不是multi
+                    // 为啥图鉴网接口是muti而不是multi
                     assert(value % 100 == 0);
                     skill.multiToolEffect = 1 + value / 100;
                 } else if (type == "Stirfry" || type == "Bake" ||
@@ -337,9 +338,10 @@ void Skill::loadJson(const Json::Value &v) {
                         ignoredSkills.find(type) == ignoredSkills.end()) {
                         missingSkills[type] = skillJson["desc"].asString();
                     }
+                    isSkillOn = false;
                 }
                 BuffCondition *condition = NULL;
-                if (effect.isMember("conditionType")) {
+                if (effect.isMember("conditionType") && isSkillOn) {
                     auto conditionType = effect["conditionType"].asString();
                     int cvalue = 0;
                     if (effect.isMember("conditionValue"))
