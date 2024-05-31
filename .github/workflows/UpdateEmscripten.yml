@@ -1,8 +1,9 @@
 name: Update Game Data and Recompile wasm
 
 on:
-    workflow_dispatch:
     push:
+        branches:
+        - "PR"
         paths-ignore:
             - 'data/**'
             - 'build_js/**'
@@ -76,7 +77,7 @@ jobs:
               with:
                   # GitHub Action output files
                   source-directory: build_js/
-                  destination-github-username: hjenryin
+                  destination-github-username: haoyun0
                   destination-repository-name: BCJH-Metropolis-html
                   user-email: 41898282+github-actions[bot]@users.noreply.github.com
                   # It defaults to `main`
@@ -118,7 +119,7 @@ jobs:
               with:
                   # GitHub Action output files
                   source-directory: build_js/
-                  destination-github-username: hjenryin
+                  destination-github-username: haoyun0
                   destination-repository-name: BCJH-Metropolis-html
                   user-email: 41898282+github-actions[bot]@users.noreply.github.com
                   # It defaults to `main`
